@@ -3,9 +3,7 @@ package com.example.crud_demo.services;
 import com.example.crud_demo.dtos.EmployeeRequest;
 import com.example.crud_demo.dtos.EmployeeSearch;
 import com.example.crud_demo.models.Employee;
-import com.example.crud_demo.repositories.EmployeePagingSortingRepository;
 import com.example.crud_demo.repositories.EmployeeRepository;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,17 +21,12 @@ import java.util.Optional;
 public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
-    private EmployeePagingSortingRepository employeePagingSortingRepository;
 
     @Autowired
     public void setEmployeeRepository(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
-    @Autowired
-    public void setEmployeePagingSortingRepository(EmployeePagingSortingRepository employeePagingSortingRepository) {
-        this.employeePagingSortingRepository = employeePagingSortingRepository;
-    }
 
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
@@ -119,7 +112,7 @@ public class EmployeeService {
     {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-        Page<Employee> pagedResult = employeePagingSortingRepository.findAll(paging);
+        Page<Employee> pagedResult = employeeRepository.findAll(paging);
 
         if(pagedResult.hasContent()) {
             return pagedResult.getContent();

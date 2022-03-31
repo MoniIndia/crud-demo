@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
 
+import static com.example.crud_demo.constants.ApiConstants.*;
+
 @Slf4j
 @RestController
 @RequestMapping(ApiConstants.API_CONTEXT)
@@ -25,13 +27,13 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("/employees")
+    @GetMapping(EMPLOYEES)
     public ResponseEntity<List<Employee>> getAllEmployees() {
         List<Employee> employeeList = employeeService.getAllEmployees();
         return ResponseEntity.ok().body(employeeList);
     }
 
-    @GetMapping("/employees/{id}")
+    @GetMapping(EMPLOYEE_BY_ID)
     public ResponseEntity<EmployeeSearch> getEmployeeById(@PathVariable("id") long id) {
         EmployeeSearch employee = employeeService.getEmployeeById(id);
         if (employee != null) {
@@ -41,19 +43,19 @@ public class EmployeeController {
         }
     }
 
-    @GetMapping("/employees/type")
+    @GetMapping(EMPLOYEE_BY_TYPE)
     public ResponseEntity<List<Employee>> getEmployeeByType(@RequestParam("type") String type) {
         return ResponseEntity.ok().body(employeeService.getEmployeeByType(type));
     }
 
-    @PostMapping("/employees")
+    @PostMapping(EMPLOYEES)
     public ResponseEntity<Employee> createEmployee(@RequestBody EmployeeRequest employeeRequest) {
         Employee newEmployee = employeeService.createEmployee(employeeRequest);
         log.info("Employee record created successfully. Employee Id: {}", newEmployee.getId());
         return ResponseEntity.created(URI.create("/employees" + "/" + newEmployee.getId())).body(newEmployee);
     }
 
-    @PutMapping("/employees")
+    @PutMapping(EMPLOYEES)
     public ResponseEntity<Employee> updateEmployee(@RequestParam(name = "id") long id, @RequestBody EmployeeRequest employeeRequest) {
         Employee newEmployee = employeeService.updateEmployee(employeeRequest, id);
         if (newEmployee != null) {
@@ -64,7 +66,7 @@ public class EmployeeController {
         }
     }
 
-    @DeleteMapping("/employees/{id}")
+    @DeleteMapping(EMPLOYEE_BY_ID)
     public ResponseEntity deleteEmployee(@PathVariable("id") long id) {
         if (employeeService.getEmployeeById(id) != null) {
             employeeService.deleteEmployee(id);
@@ -75,7 +77,7 @@ public class EmployeeController {
         }
     }
 
-    @GetMapping("/employees_paginated")
+    @GetMapping(EMPLOYEE_BY_PAGE)
     public ResponseEntity<List<Employee>> getAllEmployees(
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "10") Integer pageSize,
