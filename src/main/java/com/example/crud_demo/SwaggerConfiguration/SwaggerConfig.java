@@ -13,7 +13,7 @@ import io.swagger.v3.oas.models.info.Info;
 public class SwaggerConfig {
     private static final String BASE_PACKAGE = "com.example.crud_demo";
     private static final String TEAM_NAME = "Target";
-    private static final String TEAM_URL = "target.com";
+    private static final String TEAM_URL = "www.target.com";
     private static final String TEAM_EMAIL = "contacts@abc.com";
     private static final String APPLICATION_NAME = "Rest API for CRUD Operation";
     private static final String APPLICATION_DESCRIPTION = "API for CRUD Operation";

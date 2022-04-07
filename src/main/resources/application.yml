@@ -11,3 +11,6 @@ spring:
         ddl-auto: update
     generate-ddl: true
     show-sql: true
+server:
+  error:
+    include-message: always

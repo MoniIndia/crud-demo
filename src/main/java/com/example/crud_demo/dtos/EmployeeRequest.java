@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Builder
@@ -16,7 +18,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class EmployeeRequest {
+    @NotEmpty(message="first name cannot be empty")
+    @NotNull(message="first name cannot be null")
     private String firstName;
+    @NotEmpty(message="last name cannot be empty")
+    @NotNull(message="last name cannot be null")
     private String lastName;
     private String department;
     private String employeeType;

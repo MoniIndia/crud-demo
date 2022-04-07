@@ -31,4 +31,5 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.6'
     annotationProcessor 'org.projectlombok:lombok:1.18.6'
     implementation "org.springdoc:springdoc-openapi-ui:${openDocAPIVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
 }

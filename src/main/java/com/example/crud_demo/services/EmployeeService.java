@@ -39,6 +39,7 @@ public class EmployeeService {
             Employee employee = employeeRepository.findById(id).orElse(null);
             if(employee != null){
                 employeeSearch = EmployeeSearch.builder()
+                        .id(employee.getId())
                         .firstName(employee.getFirstName())
                         .lastName(employee.getLastName())
                         .department(employee.getDepartment())
@@ -53,7 +54,7 @@ public class EmployeeService {
         Employee newEmployee = null;
         try {
             newEmployee = Employee.builder()
-                    .employeeType(employee.getEmployeeType())
+                    .employeeType(employee.getEmployeeType().toLowerCase())
                     .firstName(employee.getFirstName())
                     .lastName(employee.getLastName())
                     .department(employee.getDepartment())
@@ -79,7 +80,7 @@ public class EmployeeService {
                 Employee employeeRecord = employeeSearch.get();
                 employeeRecord.setFirstName(employeeRequest.getFirstName());
                 employeeRecord.setLastName(employeeRequest.getLastName());
-                employeeRecord.setEmployeeType(employeeRequest.getEmployeeType());
+                employeeRecord.setEmployeeType(employeeRequest.getEmployeeType().toLowerCase());
                 employeeRecord.setDepartment(employeeRequest.getDepartment());
                 employeeRecord.setDateOfJoining(employeeRequest.getDateOfJoining());
                 employeeRecord.setCity(employeeRequest.getCity());
@@ -105,15 +106,13 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeeByType(String employeeType) {
-       return employeeRepository.findByEmployeeType(employeeType);
+       return employeeRepository.findByEmployeeType(employeeType.toLowerCase());
     }
 
     public List<Employee> getAllEmployeesPaginated(Integer pageNo, Integer pageSize, String sortBy)
     {
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
         Page<Employee> pagedResult = employeeRepository.findAll(paging);
-
         if(pagedResult.hasContent()) {
             return pagedResult.getContent();
         } else {
